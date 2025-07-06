@@ -4,7 +4,7 @@ import express, { type Router, type Express, type Request, type Response } from
 import http from "http";
 // import cors from "cors";
 import SecurityRouter from "../router/securityRouter";
-
+import TodoRouter from "../router/todoRouter";
 
 class Server {
     // on spécifie le type de l'application (express)
@@ -37,6 +37,7 @@ class Server {
             res.status(200).send("Server is running");
         });
 		this.router.use("/api/security", new SecurityRouter().getRouter());
+        this.router.use("/api/todo", new TodoRouter().getRouter());
 
 
     }
