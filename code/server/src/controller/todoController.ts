@@ -17,6 +17,14 @@ class TodoController {
         }
     }
 
+    public async getIdTodo(req: Request, res: Response): Promise<void> {
+        try {
+            const todoRepository = await this.todoRepository.getIdTodo(req, res);
+            res.status(200).send(todoRepository);
+        } catch (error) {
+            res.status(400).send("Failed to get todo");
+        }
+    }
 }
 
 export default TodoController;

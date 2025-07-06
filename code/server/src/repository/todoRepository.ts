@@ -40,6 +40,22 @@ class TodoRepository {
         }
     }
 
+    public async getIdTodo(req: Request, res: Response): Promise<any> {
+        try {
+            console.log("getIdTodo, dans le repository (requette sql)");
+            
+            // le ? est un placeholder pour éviter les injections SQL
+            // le ? sera remplacé par la valeur de req.params.id
+            const query = "SELECT todo.* FROM my_db.todo WHERE id = ?;";
+            const [result] = await this.pool.execute(query, [req.params.id]);
+            // req.params.id est utilisé pour récupérer l'id dans l'url
+            // dans l'autre méthode getalltodo il n'y a pas besoin de récupérer l'id car on prend tout les éléments de la table
+
+            return result;
+        } catch (error) {
+            throw new Error("Failed to get todo");
+        }
+    }
 }
 
 export default TodoRepository;

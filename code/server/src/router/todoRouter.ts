@@ -19,6 +19,14 @@ class TodoRouter {
             }
         });
 
+        this.router.get("/id/:id", async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            console.log("getTodoById, dans le router");
+            await this.todoController.getIdTodo(req, res);
+        } catch (error) {
+            next(error);
+        }
+    });
     return this.router;
 
     }
