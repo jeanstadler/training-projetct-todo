@@ -1,0 +1,30 @@
+services:
+  mysql:
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: my_db
+    volumes:
+      - ./code/server/mysql:/app
+      - ./mysql-db:/var/lib/mysql
+    working_dir: /app
+
+  server:
+    image: node:20
+    ports:
+      - 3000:3000
+    volumes:
+      - ./code/server:/app
+    working_dir: /app
+    tty: true
+
+  client:
+    image: node:20
+    ports:
+      - 3001:3001
+    volumes:
+      - ./code/client:/app
+    working_dir: /app
+    tty: true
