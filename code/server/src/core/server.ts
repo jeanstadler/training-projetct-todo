@@ -5,6 +5,9 @@ import http from "http";
 // import cors from "cors";
 import SecurityRouter from "../router/securityRouter";
 import TodoRouter from "../router/todoRouter";
+import UserRouter from "../router/userRouter";
+
+import cors from "cors";
 
 class Server {
     // on spécifie le type de l'application (express)
@@ -19,10 +22,13 @@ class Server {
         // quand on recois des données du client on ne peut pas les lire (exemple : maChaine.username) donc on doit les "parser" (on transforme la chaine de caractères en objet) pour pouvoir les lire
         this.app.use(express.json());
         
-        // this.app.use(cors({
-        //     origin: process.env.CORS_ORIGIN || "http://localhost:3001",
-        //     credentials: true,
-        // }));
+        // ici on spécifie le cors pour autoriser le client à accéder aux ressources du serveur
+        this.app.use(cors({
+            // process.env.ORIGINES est une variable d'environnement qui contient les origines autorisées
+            origin: process.env.ORIGINS?.split(","),
+            // credentials: true permet d'envoyer au client des cookies dans le headers d'authentification
+            credentials: true,
+        }));
 
         // on utilise le router pour les routes
         // c'est à dire que toutes les routes sont définies dans le router
@@ -38,6 +44,7 @@ class Server {
         });
 		this.router.use("/api/security", new SecurityRouter().getRouter());
         this.router.use("/api/todo", new TodoRouter().getRouter());
+        this.router.use("/api/users", new UserRouter().getAllUser());
 
 
     }
