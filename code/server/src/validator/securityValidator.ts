@@ -14,14 +14,13 @@ class SecurityValidator {
     public async validateRegister(req: Request, res: Response, next: NextFunction): Promise<User> {
         const schema = Joi.object({
             // le ".email()" permet de vérifier si l'email est valide c'est à dire qu'il contient un "@" et un "."
-            email: Joi.string().email().required(),
+            email: Joi.string().required(),
             // le ".required()" permet de vérifier si le mot de passe est requis
             password: Joi.string().required().min(8).max(32),
-            // le ".required()" permet de vérifier si le nom est requis
-            name: Joi.string().required(),
         });
         const { error, value } = schema.validate(req.body);
         if (error) {
+            console.log("oui erreur dans le validator", error);
             throw new Error(error.message);
         }
         return value;

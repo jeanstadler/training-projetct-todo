@@ -1,6 +1,7 @@
 import express, { type Router, type Request, type Response, type NextFunction } from "express";
 import SecurityCheckJoi from "../middleware/securityCheckJoi";
-import RegisterController from "../controller/registerController";
+import SecurityController from "../controller/securityController";
+
 
 class SecurityRouter {
     private router: Router = express.Router();
@@ -9,25 +10,38 @@ class SecurityRouter {
     // ici on spécifie le middleware qui va vérifier les données entrantes
     private securityCheckJoi: SecurityCheckJoi = new SecurityCheckJoi();
 
-    private registerController: RegisterController = new RegisterController();
-
+    private securityController: SecurityController = new SecurityController();
+    
+    
     public getRouter = (): Router => {
         // on utilise le router pour les routes
         // c'est à dire que toutes les routes sont définies dans le router
-        this.router.use(this.router);
+        // this.router.use(this.router);
 
 
 		this.router.post("/register", 
-			this.securityCheckJoi.checkRegister,
+			// this.securityCheckJoi.checkRegister,    
 			async (req: Request, res: Response, next: NextFunction) => {
 				try {
-					await this.registerController.register(req, res);
+
+					await this.securityController.register(req, res);
 
 				} catch (error) {
 					next(error);
 				}
 			}
 		);
+        
+        // this.router.post("/login", 
+        //     async (req: Request, res: Response, next: NextFunction) => {
+        //         try {
+        //             await this.securityController.login(req, res, next);
+        //         } catch (error) {
+        //             next(error);
+        //         }
+        //     }
+        // );
+
         return this.router;
 
     }

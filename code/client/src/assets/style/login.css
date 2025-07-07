@@ -1,0 +1,37 @@
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root{
+    min-height:100vh;
+}
+
+.login-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(116, 61, 136);
+}
+
+form{
+        border: solid 1px black;
+
+        font-size: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap:20px;
+        padding:10px;
+        border-radius: 10%;
+}
+
+input{
+    height:2rem;
+    width: 20rem;
+    border-radius: 5px;
+}
