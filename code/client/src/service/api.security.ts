@@ -9,5 +9,5 @@ export async function Register(email: string, password: string) {
     },
     body: JSON.stringify({ email, password }),
   });
-  return response.json();
+  return response;
 }
