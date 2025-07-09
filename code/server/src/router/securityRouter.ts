@@ -20,13 +20,14 @@ class SecurityRouter {
 
 
 		this.router.post("/register", 
-			// this.securityCheckJoi.checkRegister,    
+			this.securityCheckJoi.checkRegister,    
 			async (req: Request, res: Response, next: NextFunction) => {
 				try {
 
 					await this.securityController.register(req, res);
 
 				} catch (error) {
+                    console.log("dans le catch du router");
 					next(error);
 				}
 			}

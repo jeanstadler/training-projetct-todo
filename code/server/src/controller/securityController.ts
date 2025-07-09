@@ -7,7 +7,7 @@ class SecurityController {
 
     private securityRepository: SecurityRepository = new SecurityRepository();
 
-    public async register(req: Request, res: Response): Promise<void> {
+    public async register(req: Request, res: Response): Promise<any> {
 
         // 1er: hasher le mot de passe
         const hashedPassword = await argon2.hash(req.body.password);
@@ -17,11 +17,21 @@ class SecurityController {
         }
         try {
             const registerRepository = await this.securityRepository.registerUser(user);
-            res.status(200).send("Register success");
+            console.log("registerRepository", registerRepository);
+            return res.status(200).send("Register success");
         } catch (error) {
-            res.status(400).send("Register failed");
-        }
+            console.log("dans le catch du controller");
+            console.log("error", error);
 
+            if (error instanceof Error) {
+                if (error.message === "Email already exists") {
+                    return res.status(400).send("Email already exists");
+                } else {
+                    return res.status(400).send("Register failed");
+                }
+            }
+        }
+        return res.status(400).send("Register failed");
     }
 
 

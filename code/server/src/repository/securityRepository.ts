@@ -10,7 +10,7 @@ const pool: Pool = mysql.createPool({
 class SecurityRepository {
 
     // register
-    public async registerUser(user: { email: string, password: string }): Promise<void> {
+    public async registerUser(user: { email: string, password: string }): Promise<any> {
         try {
             console.log("registerUser, dans le repository");
             const [result] = await pool.execute(
@@ -18,10 +18,17 @@ class SecurityRepository {
                 [user.email, user.password]
             );
             console.log("result", result);
+            return result;
+
+        // le catch veut dire que l'on a une erreur
         } catch (error) {
             console.log("dans le catch du repository");
-            console.log("error", error);
-            throw new Error(`Failed to register user: ${error}`);
+
+            if (error instanceof Error && error.message.includes("ER_DUP_ENTRY")) {
+                throw new Error("Email already exists");
+            } else {
+                throw new Error(`Failed to register user: ${error}`);
+            }
         }
     }
 

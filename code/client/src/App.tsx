@@ -1,11 +1,14 @@
+import { NoticeProvider } from "./provider/noticeContext"
 import AppRouter from "./service/router"
-
+import './assets/style/notice.css'
 
 function App() {
 
 
   return (
-    <AppRouter />
+    <NoticeProvider>
+      <AppRouter />
+    </NoticeProvider>
   )
 }
 

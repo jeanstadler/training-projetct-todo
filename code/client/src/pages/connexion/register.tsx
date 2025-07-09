@@ -2,17 +2,22 @@ import { Register } from "../../service/api.security";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useNotice } from "../../provider/noticeContext";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setNotice } = useNotice();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await Register(email, password);
     if (response.status === 200) {
+      setNotice("Register success");
       navigate("/");
+    } else {
+      setNotice("Register failed, email already exists");
     }
   };
 
