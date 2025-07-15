@@ -21,9 +21,25 @@ export default function HomepageTodo() {
   // On ne peut pas utiliser directement une fonction asynchrone dans le JSX.
   // donc on utilise useEffect pour appeler la fonction asynchrone getTodos
 
+  // Calcul du nombre de todos complétés
+  const completedCount = todos.filter((todo: any) => todo.completed).length;
+  const totalCount = todos.length;
+
   return (
     <div className="homepage-todo">
       <h1>Todo List</h1>
+      {/* Affichage du compteur de progression */}
+      <div className="todo-stats">
+        <p>Progression: {completedCount}/{totalCount} todos complétés</p>
+        {totalCount > 0 && (
+          <div className="progress-bar">
+            <div 
+              className="progress-fill" 
+              style={{ width: `${(completedCount / totalCount) * 100}%` }}
+            ></div>
+          </div>
+        )}
+      </div>
       <ul>
         {/* boucle car c'est une liste */}
         {todos.map((todo: any) => (
