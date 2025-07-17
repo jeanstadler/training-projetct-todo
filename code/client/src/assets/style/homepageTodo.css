@@ -32,3 +32,33 @@ body{
     transition: width 0.3s ease;
     border-radius: 10px;
 }
+
+/* Styles pour les boutons de filtre */
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.filter-buttons button {
+    padding: 10px 15px;
+    border: 2px solid #555;
+    background-color: #222;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.filter-buttons button:hover {
+    background-color: #444;
+    border-color: #777;
+}
+
+.filter-buttons button.active {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    font-weight: bold;
+}
